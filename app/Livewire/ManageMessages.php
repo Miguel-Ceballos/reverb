@@ -7,13 +7,13 @@ use Livewire\Component;
 
 class ManageMessages extends Component
 {
-    public $content;
+    public string $content;
 
-    public $messages = [];
+    public $mensajes;
 
     public function mount()
     {
-        $this->messages = Message::orderByDesc('created_at')->get();
+        $this->mensajes = Message::latest()->get();
     }
 
     public function render()
@@ -21,17 +21,21 @@ class ManageMessages extends Component
         return view('livewire.manage-messages');
     }
 
-    public function save()
+    public function saveMessage() : void
     {
-        $this->validate([
-            'content' => ['required', 'string', 'min:3', 'max:100'],
-        ]);
-
+//        $this->validate();
         Message::create([
             'content' => $this->content,
             'user_id' => auth()->user()->id,
         ]);
 
         $this->reset();
+    }
+
+    public function rules()
+    {
+        return [
+            'content' => 'required',
+        ];
     }
 }
