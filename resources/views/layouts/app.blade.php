@@ -41,5 +41,14 @@
         @stack('modals')
 
         @livewireScripts
+
+        <script>
+            window.onload = function () {
+                Echo.channel('chat')
+                    .listen('MessageSent', (e) => {
+                        console.log('Hello');
+                    });
+            };
+        </script>
     </body>
 </html>

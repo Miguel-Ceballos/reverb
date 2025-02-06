@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Events\MessageSent;
 use App\Models\Message;
 use Livewire\Component;
 
@@ -29,7 +30,9 @@ class ManageMessages extends Component
             'user_id' => auth()->user()->id,
         ]);
 
-        $this->reset();
+        $this->reset('content');
+
+        MessageSent::dispatch();
     }
 
     public function rules()
